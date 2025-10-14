@@ -159,6 +159,9 @@ def load_stopwords():
         'ꯑꯩꯖꯣꯡꯅꯗꯤ', 'ꯑꯩꯖꯣꯡꯅꯗꯨ', 'ꯑꯩꯖꯣꯡꯅꯥ', 'ꯑꯩꯖꯣꯡꯅꯥꯁꯨ', 'ꯑꯩꯖꯣꯡꯅꯥꯗꯤ', 'ꯑꯩꯖꯣꯡꯅꯥꯗꯨ', 'ꯑꯩꯖꯣꯡꯁꯤ', 'ꯑꯩꯖꯣꯡꯁꯨ'
     }
     
+    # Bodo stopwords (currently empty, can be expanded)
+    stopword_dict['bodo'] = set()
+    
     return stopword_dict
 
 # Clean text by removing punctuation and normalizing spaces
@@ -220,7 +223,7 @@ def tokenize_text(text, lang):
             except:
                 ensure_nltk_data()
                 return word_tokenize(text)
-        elif lang in ['hindi', 'assamese', 'manipuri']:
+        elif lang in ['hindi', 'assamese', 'manipuri', 'bodo']:
             # First normalize the text to NFC form
             text = unicodedata.normalize('NFC', text)
             
@@ -311,7 +314,8 @@ def get_font_path(lang):
     font_mapping = {
         'hindi': 'fonts/Noto_Sans_Devanagari/static/NotoSansDevanagari-Regular.ttf',
         'assamese': 'fonts/Noto_Sans_Bengali/static/NotoSansBengali-Regular.ttf',
-        'manipuri': 'fonts/Noto_Sans_Meetei_Mayek/static/NotoSansMeeteiMayek-Regular.ttf'
+        'manipuri': 'fonts/Noto_Sans_Meetei_Mayek/static/NotoSansMeeteiMayek-Regular.ttf',
+        'bodo': 'fonts/Noto_Sans_Devanagari/static/NotoSansDevanagari-Regular.ttf'
     }
     
     font_path = font_mapping.get(lang)
@@ -453,7 +457,8 @@ def setup_ui():
         'english': 'English',
         'hindi': 'Hindi',
         'assamese': 'Assamese',
-        'manipuri': 'Manipuri'
+        'manipuri': 'Manipuri',
+        'bodo': 'Bodo'
     }
     selected_lang = st.selectbox("Select language:", list(language_options.keys()), format_func=lambda x: language_options[x])
     
@@ -552,7 +557,8 @@ def setup_ui():
                     font_dir_mapping = {
                         'hindi': 'fonts/Noto_Sans_Devanagari',
                         'assamese': 'fonts/Noto_Sans_Bengali',
-                        'manipuri': 'fonts/Noto_Sans_Meetei_Mayek'
+                        'manipuri': 'fonts/Noto_Sans_Meetei_Mayek',
+                        'bodo': 'fonts/Noto_Sans_Devanagari'
                     }
                     font_dir = font_dir_mapping.get(selected_lang)
                 st.write(f"Language: {selected_lang}")
